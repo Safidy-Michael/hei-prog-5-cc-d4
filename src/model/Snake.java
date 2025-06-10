@@ -27,10 +27,6 @@ public class Snake {
         return body.contains(p);
     }
 
-    public boolean isCollidingWithItself() {
-        Point head = getHead();
-        return body.stream().skip(1).anyMatch(p -> p.equals(head));
-    }
     public void move(Point nextPosition, boolean grow) {
         body.addFirst(nextPosition);
         if (!grow) {
