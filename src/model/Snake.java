@@ -31,9 +31,11 @@ public class Snake {
         Point head = getHead();
         return body.stream().skip(1).anyMatch(p -> p.equals(head));
     }
-    public void move(Point nextPosition) {
+    public void move(Point nextPosition, boolean grow) {
         body.addFirst(nextPosition);
-        body.removeLast();
+        if (!grow) {
+            body.removeLast();
+        }
     }
 
 }

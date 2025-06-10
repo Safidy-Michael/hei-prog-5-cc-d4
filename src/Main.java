@@ -11,6 +11,7 @@ public class Main {
         final int SIZE = 10;
         Scanner scanner = new Scanner(System.in);
         Point start = new Point(5, 5);
+        Point food = new Point(2, 2);
         Snake snake = new Snake(start, Direction.RIGHT);
         while (true) {
             for (int y = 0; y < SIZE; y++) {
@@ -18,7 +19,13 @@ public class Main {
                     Point p = new Point(x, y);
                     if (p.equals(snake.getHead())) {
                         System.out.print("* ");
-                    } else {
+                    } else if (snake.isOnBody(p)) {
+                        System.out.print("o ");
+                    }
+                       else if (p.equals(food)) {
+                    System.out.print("@ ");
+                    }
+                       else {
                         System.out.print(". ");
                     }
                 }
@@ -54,8 +61,15 @@ public class Main {
                 System.out.println("XD You hit the wall! Game Over.");
                 break;
             }
-
-            snake.move(next);
+            boolean eats = next.equals(food);
+            snake.move(next,eats);
+            if (eats) {
+                do {
+                    int fx = (int) (Math.random() * SIZE);
+                    int fy = (int) (Math.random() * SIZE);
+                    food = new Point(fx, fy);
+                } while (snake.isOnBody(food));
+            }
 
             System.out.print("\033[H\033[2J");
             System.out.flush();
